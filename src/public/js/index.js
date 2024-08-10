@@ -1,14 +1,5 @@
 const socket = io();
 
-const enviarFormulario = (e) => {
-    e.preventDefault();
-    const nombreInput = document.getElementById("nombre");
-    const mnj = nombreInput.value;
-    socket.emit('message', mnj);
-    console.log("Formulario enviado:", mnj);
-    nombreInput.value = '';
-}
-
 document.getElementById('add-product-form').addEventListener('submit', e => {
     e.preventDefault();
     const title = document.getElementById('product-title').value;

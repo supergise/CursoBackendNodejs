@@ -4,14 +4,6 @@ const ProductManager = require('./../managers/productManager');
 
 const productManager = new ProductManager();
 
-router.get('/bienvenida',(req,res)=> {
-    let testUser = {
-        name: "Hilda",
-        last_name: "Martinez"
-    }
-    res.render('index', testUser);
-});
-
 router.get('/', async (req, res) => {
     res.render('home', { products: await productManager.getAll(null)});
 });
