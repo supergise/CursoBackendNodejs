@@ -1,6 +1,6 @@
 const socket = io();
 
-document.getElementById('add-product-form').addEventListener('submit', e => {
+document.getElementById('add-product-form').addEventListener('submit', async e => {
     e.preventDefault();
     const title = document.getElementById('product-title').value;
     const description = document.getElementById('product-description').value;
@@ -11,7 +11,13 @@ document.getElementById('add-product-form').addEventListener('submit', e => {
 
     const product = { title, description, code, price, stock, category };
 
-    socket.emit('addProduct', product);
+    await fetch('/api/products', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(product),
+    });
 
     // Limpiar campos
     document.getElementById('product-title').value = '';
@@ -22,11 +28,13 @@ document.getElementById('add-product-form').addEventListener('submit', e => {
     document.getElementById('product-category').value = '';
 });
 
-document.getElementById('remove-product-form').addEventListener('submit', e => {
+document.getElementById('remove-product-form').addEventListener('submit', async e => {
     e.preventDefault();
     const code = document.getElementById('remove-product-code').value;
 
-    socket.emit('removeProduct', code);
+    await fetch(`/api/products/${code}`, {
+        method: 'DELETE',
+    });
 
     // Limpiar campo
     document.getElementById('remove-product-code').value = '';
