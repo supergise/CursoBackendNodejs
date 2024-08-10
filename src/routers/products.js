@@ -1,5 +1,5 @@
 const express = require('express');
-const ProductManager = require('../managers/productManager');
+const ProductManager = require('./../managers/productManager');
 const router = express.Router();
 
 const productManager = new ProductManager();
@@ -26,8 +26,8 @@ router.post('/', async (req, res) => {
     if (validationError) {
         return res.status(400).send(validationError);
     }
-
     await productManager.add(product);
+    await emitProducts();
     res.status(201).json(product);
 });
 
@@ -35,13 +35,15 @@ router.post('/', async (req, res) => {
 router.put('/:pid', async (req, res) => {
     const updatedProduct = req.body;
     await productManager.updateById(+req.params.pid, updatedProduct);
+    await emitProducts();
     res.json(updatedProduct);
 });
 
 // Eliminar un producto
 router.delete('/:pid', async (req, res) => {
     await productManager.deleteById(+req.params.pid);
-    res.status(200).json({ message: 'Producto  eliminado correctamente' });
+    await emitProducts();
+    res.status(200).json({ message: 'Producto eliminado correctamente' });
 });
 
 // Validar campos obligatorios excepto thumbnails 
@@ -53,6 +55,12 @@ const validateProduct = (product) => {
         }
     }
     return null;
+};
+
+const emitProducts = async () => {
+    const {socketServer} = await import('../app.js');
+    const products = await productManager.getAll(null);
+    socketServer.emit('updateProducts', products );
 };
 
 module.exports = router;
