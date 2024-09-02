@@ -1,9 +1,37 @@
-const fs = require('fs').promises;
-const path = require('path');
-
-const productsFilePath = path.join(__dirname, '../data/products.json');
-
+const Product = require("../models/product.model");
 class ProductManager {
+    async getAllProducts() {
+      return await Product.find({}, "title description price code stock category");
+    }
+  
+    async getProductById(id) {
+      return await Product.findById(id);
+    }
+  
+    async createProduct(data) {
+      const product = new Product(data);
+      return await product.save();
+    }
+  
+    async updateProductById(id, updatedData) {
+      return await Product.findByIdAndUpdate(id, updatedData, { new: true });
+    }
+  
+    async deleteProductById(id) {
+      return await Product.findByIdAndDelete(id);
+    }
+}
+
+module.exports = ProductManager;
+
+
+
+
+
+
+//TO DO  Actualizar en las routes los nombres de las funciones
+
+/* class ProductManager {
     constructor() {
         this.init();
     }
@@ -55,6 +83,4 @@ class ProductManager {
         const filteredProducts = products.filter(product => product.id !== id);
         await this.saveAll(filteredProducts);
     }
-}
-
-module.exports = ProductManager;
+} */

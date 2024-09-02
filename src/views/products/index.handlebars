@@ -1,0 +1,13 @@
+{{> header}}
+<h1>Products</h1>
+<ul>
+    {{#each products}}
+        <li>
+            <a href="/products/product/{{this._id}}">{{this.name}}</a>
+            <form action="/products/product/{{this._id}}?_method=DELETE" method="POST" style="display:inline;">
+                <button type="submit">Delete</button>
+            </form>
+        </li>
+    {{/each}}
+</ul>
+<a href="/products/form">Create a New Product</a>
