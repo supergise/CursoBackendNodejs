@@ -1,35 +1,5 @@
 const socket = io();
 
-/* if (document.getElementById('add-product-form')) {
-    document.getElementById('add-product-form').addEventListener('submit', async e => {
-        e.preventDefault();
-        const title = document.getElementById('product-title').value;
-        const description = document.getElementById('product-description').value;
-        const code = document.getElementById('product-code').value;
-        const price = parseFloat(document.getElementById('product-price').value);
-        const stock = parseInt(document.getElementById('product-stock').value);
-        const category = document.getElementById('product-category').value;
-        const file = document.getElementById('image').value;
-
-        const product = { title, description, code, price, stock, category, file };
-
-        const response = await fetch('/api/products', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(product),
-        });
-        console.log(response);
-        // Limpiar campos
-        document.getElementById('product-title').value = '';
-        document.getElementById('product-description').value = '';
-        document.getElementById('product-code').value = '';
-        document.getElementById('product-price').value = '';
-        document.getElementById('product-stock').value = '';
-        document.getElementById('product-category').value = '';
-    });
-} */
 if (document.getElementById('remove-product-form')) {
     document.getElementById('remove-product-form').addEventListener('submit', async e => {
         e.preventDefault();

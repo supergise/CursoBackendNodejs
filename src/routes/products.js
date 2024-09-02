@@ -9,7 +9,6 @@ router.get("/form", productController.showCreateProductForm);
 
 // Traer los productos con límite
 router.get("/", async (req, res) => {
-    const limit = req.query.limit ? +req.query.limit : null;
     const products = await productController.getAllProducts(req, res);
     res.json(products);
 });

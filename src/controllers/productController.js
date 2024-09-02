@@ -4,21 +4,44 @@ const productManager = new ProductManager();
 class ProductController {
     getAllProducts = async (req, res) => {
         try {
-            const products = await productManager.getAllProducts();
-            if (res) {
-                res.render("products/index", { products });
-            } else {
-                return products;
-            }
+            const { page = 1, limit = 10, sort = 'desc', search = '' } = req.query;
+            const sortOrder = sort === 'asc' ? 1 : -1;
+    
+            const searchFilter = {
+                $or: [
+                    { title: { $regex: search, $options: 'i' } },
+                    { category: { $regex: search, $options: 'i' } }
+                ]
+            };
+    
+            const options = {
+                page: parseInt(page),
+                limit: parseInt(limit),
+                sort: { price: sortOrder },
+            };
+    
+            const result = await productManager.getAllPage(searchFilter, options);
+    
+            res.render("products/index", { 
+                products: result.docs,
+                currentPage: result.page,
+                totalPages: result.totalPages,
+                hasPrevPage: result.hasPrevPage,
+                hasNextPage: result.hasNextPage,
+                prevPage: result.prevPage,
+                nextPage: result.nextPage,
+                sort,
+                limit,
+                search,
+            });
         } catch (error) {
-            if (res) {
-                res.status(500).json({
-                    message_error: error.message,
-                    success: false,
-                });
-            }
+            res.status(500).json({
+                message_error: error.message,
+                success: false,
+            });
         }
     };
+    
 
     showCreateProductForm = (req, res) => {
         res.render("products/create"); // Asegúrate de que este archivo exista en tu carpeta de vistas

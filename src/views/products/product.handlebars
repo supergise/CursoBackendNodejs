@@ -1,17 +1,19 @@
 {{> header}}
-<h1>{{product.title}}</h1>
-<p>{{product._id}}</p>
-<p>{{product.description}}</p>
-<p>Price: ${{product.price}}</p>
-<img src="{{#if product.thumbnails.[0]}}{{product.thumbnails.[0]}}{{else}}no_image.jpg{{/if}}" alt="{{product.name}}" style="width: 180px; height: 200px;">
 
-<form id="remove-product-form">
-    <input type="hidden" id="remove-product-code" placeholder="Código del producto a eliminar" value="{{product._id}}">
-    <button type="submit">Eliminar Producto</button>
-</form>
+<div class="product-view">
+    <h1>{{product.title}}</h1>
+    <p>ID del Producto: {{product._id}}</p>
+    <p>{{product.description}}</p>
+    <p>Price: ${{product.price}}</p>
+    <img src="{{#if product.thumbnails.[0]}}{{product.thumbnails.[0]}}{{else}}/images/no_image.jpg{{/if}}" alt="{{product.title}}" style="width: 180px; height: 200px;">
 
-<a href="/products">Back to Products</a>
+    <form id="remove-product-form">
+        <input type="hidden" id="remove-product-code" value="{{product._id}}">
+        <button type="submit">Eliminar Producto</button>
+    </form>
 
+    <a href="/products">Volver a Productos</a>
+</div>
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/index.js"></script>
