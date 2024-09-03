@@ -1,0 +1,19 @@
+{{> header}}
+<h1>Carrito id {{cart._id}}</h1>
+
+<table>
+    <thead>
+      <tr>
+        <th>Producto</th>
+        <th>Cantidad</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each cart.products}}
+        <tr>
+          <td>{{this.product.title}}</td>
+          <td>{{this.quantity}}</td>
+        </tr>
+      {{/each}}
+    </tbody>
+</table>

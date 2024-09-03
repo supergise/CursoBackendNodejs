@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
 
-// todo controlar código
-
 const cartSchema = new mongoose.Schema({
   products: [
     {

@@ -18,15 +18,35 @@ class CartManager {
     return await Cart.findByIdAndUpdate(id, updatedData, { new: true });
   }
 
+  async updateProductQuantityByCartId(cid, pid, body) {
+    const cart = await this.getCartById(cid);
+    if (!cart) {
+        return null;
+    }
+    console.log(cart)
+    const productIndex = cart.products.findIndex(
+        (p) => p._id.toString() === pid.toString()
+    );
+    console.log(productIndex)
+    if (productIndex !== -1) {
+        cart.products[productIndex].quantity = body.quantity;
+    } else{
+        cart.products.push({ _id: pid, product: pid, quantity: body.quantity });
+    }
+    await cart.save();
+    return cart;
+  }
+
   async deleteProductFromCart(cartId, productId, quantity = 1) {
     const cart = await this.getCartById(cartId);
     if (!cart) {
       return null;
     }
-
+    console.log(cart)
     const productIndex = cart.products.findIndex(
-      (p) => p.product.toString() === productId.toString()
+      (p) => p.product._id.toString() === productId.toString()
     );
+    console.log(productIndex)
     if (productIndex !== -1) {
       cart.products[productIndex].quantity -= quantity;
       if (cart.products[productIndex].quantity <= 0) {
@@ -35,6 +55,10 @@ class CartManager {
       await cart.save();
     }
     return cart;
+  }
+
+  async deleteCart(cartId) {
+    return await Cart.findByIdAndDelete(cartId);
   }
 
   async productExists(productId) {
