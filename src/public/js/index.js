@@ -22,3 +22,63 @@ socket.on('updateProducts', products => {
         productList.appendChild(li);
     });
 });
+
+function addToCart(productId) {
+    let cartId = localStorage.getItem('cartId');
+   
+    if (cartId) {
+        updateCart(cartId, productId);
+    } else {
+        createCart().then(newCartId => {
+            localStorage.setItem('cartId', newCartId);
+            updateCart(newCartId, productId);
+        }).catch(error => {
+            console.error('Error creating cart:', error);
+            alert('Hubo un problema al crear el carrito.');
+        });
+    }
+}
+
+function createCart() {
+    return fetch('/api/carts', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => data._id) 
+    .catch(error => {
+        console.error('Error:', error);
+        throw error;
+    });
+}
+
+function updateCart(cartId, productId) {
+    fetch(`/api/carts/${cartId}/products/${productId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ quantity: 1 }) 
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert('Producto añadido al carrito!');
+        console.log(data);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Hubo un problema al añadir el producto al carrito.');
+    });
+}
+
+function viewCart() {
+    const cartId = localStorage.getItem('cartId');
+   
+    if (cartId) {
+        window.open(`/carts/${cartId}`, '_blank');
+    } else {
+        alert('No hay carrito disponible. Primero añade un producto al carrito.');
+    }
+}

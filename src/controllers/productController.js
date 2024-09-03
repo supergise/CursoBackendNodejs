@@ -41,10 +41,9 @@ class ProductController {
             });
         }
     };
-    
 
     showCreateProductForm = (req, res) => {
-        res.render("products/create"); // Asegúrate de que este archivo exista en tu carpeta de vistas
+        res.render("products/create"); 
     };
 
     createProduct = async (req, res) => {
@@ -112,7 +111,6 @@ class ProductController {
         }
     };
 
-    // Validar campos obligatorios excepto thumbnails
     validateProduct = (product) => {
         const requiredFields = [
             "title",

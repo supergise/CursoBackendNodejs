@@ -1,19 +1,54 @@
 {{> header}}
-<h1>Carrito id {{cart._id}}</h1>
+<h1>Carrito</h1>
 
 <table>
     <thead>
       <tr>
         <th>Producto</th>
         <th>Cantidad</th>
+        <th>Acción</th>
       </tr>
     </thead>
     <tbody>
       {{#each cart.products}}
         <tr>
           <td>{{this.product.title}}</td>
-          <td>{{this.quantity}}</td>
+          <td id="quantity-{{this.product._id}}">{{this.quantity}}</td>
+          <td>
+            <button onclick="updateQuantity('{{this.product._id}}', 'decrement')">-</button>
+            <button onclick="updateQuantity('{{this.product._id}}', 'increment')">+</button>
+          </td>
         </tr>
       {{/each}}
     </tbody>
 </table>
+
+
+<script>
+    const cartId = '{{cart._id}}';
+    function updateQuantity(productId, action) {
+        const currentQuantityElement = document.getElementById(`quantity-${productId}`);
+        let currentQuantity = parseInt(currentQuantityElement.textContent, 10);
+
+        if (action === 'increment') {
+            currentQuantity += 1;
+        } else if (action === 'decrement') {
+            currentQuantity -= 1;
+        }
+        fetch(`/api/carts/${cartId}/products/${productId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ quantity: currentQuantity })
+        })
+        .then(response => response.json())
+        .then(data => {
+            location.reload();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Hubo un problema al actualizar la cantidad.');
+        });
+    }
+</script>
