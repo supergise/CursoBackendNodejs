@@ -8,7 +8,7 @@
     <img src="{{#if product.thumbnails.[0]}}{{product.thumbnails.[0]}}{{else}}/images/no_image.jpg{{/if}}" alt="{{product.title}}" style="width: 180px; height: 200px;">
 
     <button onclick="addToCart('{{product._id}}')" class="button-add-cart">Añadir al Carrito</button>
-
+    <button onclick="window.location.href='/products/edit/{{product._id}}'" class="button-edit-cart">Editar Producto</button>
     <form id="remove-product-form">
         <input type="hidden" id="remove-product-code" value="{{product._id}}">
         <button type="submit">Eliminar Producto</button>

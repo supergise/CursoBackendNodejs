@@ -48,7 +48,10 @@ class ProductController {
 
     createProduct = async (req, res) => {
         try {
-            const imageUrl = `/files/uploads/${req.file.filename}`;
+            let imageUrl;
+            if (req.file) {
+                imageUrl = `/files/uploads/${req.file.filename}`;
+            }
             const {
                 title,
                 description,
@@ -86,6 +89,48 @@ class ProductController {
         }
     };
 
+    updateProductById = async (req, res) => {
+        try {
+            let imageUrl;
+            if (req.file) {
+                imageUrl = `/files/uploads/${req.file.filename}`;
+            } 
+            const {
+                title,
+                description,
+                code,
+                price,
+                status,
+                stock,
+                category,
+            } = req.body;
+            const product = {
+                title,
+                description,
+                code,
+                price,
+                status: true,
+                stock,
+                category,
+                thumbnails: [imageUrl] || [],
+            };
+            res.status(200).json({ message: "modificado ok" })
+            const validationError = this.validateProduct(product);
+            if (validationError) {
+                return res.status(400).send(validationError);
+            }
+            
+            await productManager.updateProductById(req.params.pid, product);
+            return product;
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({
+                message_error: error.message,
+                success: false,
+            });
+        }
+    };
+
     deleteProductById = async (req, res) => {
         try {
             const { pid } = req.params;
@@ -103,6 +148,19 @@ class ProductController {
             const { pid } = req.params;
             const product = await productManager.getProductById(pid);
             res.render("products/product", { product });
+        } catch (error) {
+            res.status(500).json({
+                message_error: error.message,
+                success: false,
+            });
+        }
+    };
+
+    getProductByIdtoModify = async (req, res) => {
+        try {
+            const { pid } = req.params;
+            const product = await productManager.getProductById(pid);
+            res.render('products/edit', { product });
         } catch (error) {
             res.status(500).json({
                 message_error: error.message,

@@ -18,7 +18,7 @@ class ProductManager {
     }
   
     async updateProductById(id, updatedData) {
-      return await Product.findByIdAndUpdate(id, updatedData, { new: true });
+      return await Product.findByIdAndUpdate(id, updatedData, { new: false });
     }
   
     async deleteProductById(id) {

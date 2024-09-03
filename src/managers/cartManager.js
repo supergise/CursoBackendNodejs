@@ -29,7 +29,11 @@ class CartManager {
     );
     console.log(productIndex)
     if (productIndex !== -1) {
-        cart.products[productIndex].quantity = body.quantity;
+        if (body.quantity == 0) {
+            cart.products.splice(productIndex, 1);
+          } else {
+            cart.products[productIndex].quantity = body.quantity;
+          }
     } else{
         cart.products.push({ _id: pid, product: pid, quantity: body.quantity });
     }

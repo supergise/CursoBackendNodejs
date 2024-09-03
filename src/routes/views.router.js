@@ -18,4 +18,8 @@ router.get('/carts/:cid', async (req, res) => {
     await cartController.getCartById(req, res);
 });
 
+router.get('/products/edit/:pid', async (req, res) => {
+    await productController.getProductByIdtoModify(req, res);
+});
+
 module.exports = router;

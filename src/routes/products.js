@@ -20,11 +20,8 @@ router.post("/", upload.single('image'), async (req, res) => {
     await productController.createProduct(req, res);
 });
 
-router.put("/:pid", async (req, res) => {
-    const updatedProduct = req.body;
-    await productController.updateProductById(+req.params.pid, updatedProduct);
-    await emitProducts();
-    res.json(updatedProduct);
+router.put("/:pid", upload.single('image'), async (req, res) => {
+    await productController.updateProductById(req, res);
 });
 
 router.delete("/:pid", async (req, res) => {
