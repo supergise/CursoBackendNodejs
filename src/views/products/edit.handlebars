@@ -1,0 +1,44 @@
+{{> header}}
+
+<h2>{{#if product}}Editar Producto{{else}}Añadir Producto{{/if}}</h2>
+<form id="add-product-form" action="{{#if product}}/api/products/{{product._id}}{{else}}/api/products{{/if}}" method="POST" enctype="multipart/form-data">
+    {{#if product}}
+        <input type="hidden" name="_method" value="PUT">
+    {{/if}}
+    <input type="text" name="title" id="product-title" placeholder="Título" value="{{product.title}}" required>
+    <input type="text" name="description" id="product-description" placeholder="Descripción" value="{{product.description}}" required>
+    <input type="text" name="code" id="product-code" placeholder="Código" value="{{product.code}}" required>
+    <input type="number" name="price" id="product-price" placeholder="Precio" value="{{product.price}}" required>
+    <input type="number" name="stock" id="product-stock" placeholder="Stock" value="{{product.stock}}" required>
+    <input type="text" name="category" id="product-category" placeholder="Categoría" value="{{product.category}}" required>
+    <input type="file" name="image" id="image">
+    <button type="submit">{{#if product}}Actualizar Producto{{else}}Añadir Producto{{/if}}</button>
+</form>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js"></script>
+<script>
+    document.getElementById('add-product-form').addEventListener('submit', function(event) {
+        event.preventDefault(); 
+
+        const form = event.target;
+        const formData = new FormData(form);
+        const method = form.querySelector('input[name="_method"]') ? 'PUT' : 'POST'; 
+        for (const [key, value] of formData.entries()) {
+            console.log(`${key}: ${value}`);
+        }
+        fetch(form.action, {
+            method: method,
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            window.location.href = '/products'; // Redirect to the product list page or handle success accordingly
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Hubo un problema al procesar la solicitud.');
+        });
+    });
+</script>

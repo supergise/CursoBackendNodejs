@@ -1,0 +1,16 @@
+{{> header}}
+
+<h2>Añadir Producto</h2>
+<form action="/api/products" id="add-product-form" method="POST" enctype="multipart/form-data">
+    <input type="text" name="title" id="product-title" placeholder="Título" required>
+    <input type="text" name="description" id="product-description" placeholder="Descripción" required>
+    <input type="text" name="code" id="product-code" placeholder="Código" required>
+    <input type="number" name="price" id="product-price" placeholder="Precio" required>
+    <input type="number" name="stock" id="product-stock" placeholder="Stock" required>
+    <input type="text" name="category" id="product-category" placeholder="Categoría" required>
+    <input type="file" name="image" id="image" placeholder="Image">
+    <button type="submit">Añadir Producto</button>
+</form>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js"></script>

@@ -1,3 +1,4 @@
+/*work in progress */
 *,
 *::before,
 *::after {
@@ -10,6 +11,32 @@ body {
     margin: 0;
     padding: 20px;
 }
+
+/* NavBar */
+
+header {
+    background-color: #284e86;
+    padding: 10px 0;
+}
+
+nav {
+    text-align: center;
+}
+
+nav a {
+    color: white; 
+    text-decoration: none;
+    font-size: 18px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+nav a:hover {
+    background-color: #1a3358;
+}
+
+/* estilos generales */
 
 h1, h2 {
     color: #333;
@@ -32,14 +59,239 @@ h1, h2 {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+form input[type="text"],
+form input[type="number"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+form button,
+.button-add-cart {
+    width: 100%;
+    padding: 10px;
+    background-color: #284e86;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+form button:hover,
+.button-add-cart:hover {
+    background-color: #1a3358;
+}
+
+.button-edit-cart {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #67587f;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.button-edit-cart:hover {
+    background-color: #414852;
+}
+
+form h2 {
+    margin-top: 0;
+}
+
+#remove-product-form {
+    width: 50%;
+    padding: 10px;
+    margin: 0 auto;
+}
+
+/* Estilos para la Tabla de Productos */
+table {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+table thead {
+    background-color: #284e86; 
+    color: white;
+}
+
+table th, table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f4f4f4;
+}
+
+table tbody tr:hover {
+    background-color: #ddd; 
+}
+
+.pagination {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.pagination a {
+    color: #284e86;
+    text-decoration: none;
+    padding: 8px 12px;
+    margin: 0 5px;
+    border-radius: 4px;
+    border: 1px solid #284e86;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.pagination a:hover {
+    background-color: #1a3358;
+    color: white;
+}
+
+.pagination span {
+    margin: 0 10px;
+    font-weight: bold;
+}
+
+table {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+table thead {
+    background-color: #284e86; 
+    color: white;
+}
+
+table th, table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f4f4f4;
+}
+
+table tbody tr:hover {
+    background-color: #ddd; 
+}
+
+.pagination {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.pagination a {
+    color: #284e86;
+    text-decoration: none;
+    padding: 8px 12px;
+    margin: 0 5px;
+    border-radius: 4px;
+    border: 1px solid #284e86;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.pagination a:hover {
+    background-color: #1a3358;
+    color: white;
+}
+
+.pagination span {
+    margin: 0 10px;
+    font-weight: bold;
+}
+
+/* Vista de Producto Individual */
+.product-view {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.product-view h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.product-view p {
+    font-size: 16px;
+    color: #666;
+    margin: 5px 0;
+}
+
+.product-view img {
+    display: block;
+    margin: 20px auto;
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.product-view form {
+    margin-top: 20px;
+}
+
+.product-view form button {
+    background-color: #d9534f; 
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.product-view form button:hover {
+    background-color: #c9302c; 
+}
+
+.product-view a {
+    display: inline-block;
+    color: #284e86;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.product-view a:hover {
+    color: #1a3358;
+}
+
+/* Formulario Añadir producto */
 form {
     max-width: 600px;
     margin: 20px auto;
     padding: 20px;
     background-color: #fff;
-    border: 1px solid #ddd;
     border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 form input[type="text"],
@@ -51,9 +303,130 @@ form input[type="number"] {
     border-radius: 4px;
 }
 
+/* Botón principal: Añadir Producto */
 form button {
     width: 100%;
     padding: 10px;
+    background-color: #284e86; 
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+form button:hover {
+    background-color: #1a3358;
+}
+
+form input[type="file"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #666; 
+}
+
+form input[type="file"]::file-selector-button {
+    background-color: #ddd; 
+    color: #333;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+form input[type="file"]::file-selector-button:hover {
+    background-color: #ccc; 
+}
+
+form input[type="file"]::-webkit-file-upload-text {
+    color: #666; 
+    font-style: italic; 
+}
+
+/* Sorting */
+.sorting {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #333;
+}
+
+.sorting span {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.sorting a {
+    color: #284e86;
+    text-decoration: none;
+    padding: 8px 12px;
+    border: 1px solid #284e86;
+    border-radius: 4px;
+    margin: 0 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sorting a:hover {
+    background-color: #1a3358;
+    color: white;
+}
+
+/* Limit */
+.limit-selection {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #333;
+}
+
+.limit-selection label {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.limit-selection select {
+    padding: 5px 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+}
+
+.limit-selection select:hover {
+    border-color: #284e86;
+}
+
+/* Search */
+.search-and-sort {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#search-form {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+#search-form input[type="text"] {
+    padding: 8px 12px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 250px;
+    margin-right: 10px;
+}
+
+#search-form button {
+    padding: 8px 16px;
     background-color: #284e86;
     color: white;
     border: none;
@@ -62,15 +435,10 @@ form button {
     font-size: 16px;
 }
 
-form button:hover {
+#search-form button:hover {
     background-color: #1a3358;
 }
 
-form h2 {
-    margin-top: 0;
+.sorting, .limit-selection {
+    margin-top: 10px;
 }
-
-#remove-product-form {
-    margin-top: 20px;
-}
-

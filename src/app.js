@@ -1,37 +1,66 @@
 const express = require('express');
-const handlebars = require('express-handlebars');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+dotenv.config();
+const logger = require('morgan');
+const methodOverride = require('method-override');
 const path = require('path');
-const productsRouter = require('./routers/products');
-const cartsRouter = require('./routers/carts');
-const viewsRouter = require('./routers/views.router');
-
 const { Server } = require('socket.io');
-const port = 8080;
+const handlebars = require('express-handlebars');
 const ProductManager = require('./managers/productManager');
-
 const productManager = new ProductManager();
 
+const port = 8080;
 const app = express();
+
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/files', express.static(path.join(__dirname, 'files')));
+
+const hbs = handlebars.create({
+  defaultLayout: "main",
+  layoutsDir: path.join(__dirname, "views", "layouts"),
+  partialsDir: path.join(__dirname, "views", "partials"),
+  runtimeOptions: {
+    allowProtoPropertiesByDefault: true,
+  },
+  helpers: {
+      eq: function (a, b) {
+          return a == b;
+      },
+  },
+});
+app.engine('handlebars', hbs.engine);
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'handlebars');
+
+const productsRouter = require('./routes/products');
+const cartsRouter = require('./routes/carts');
+const viewsRouter = require('./routes/views.router');
+
+app.use('/', viewsRouter);
+app.use('/api/products', productsRouter);
+app.use('/api/carts', cartsRouter);
+
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(() => {
+    console.log("Conectado a MongoDB Atlas");
+  })
+  .catch((error) => {
+    console.error("Error conectando a MongoDB Atlas:", error);
+  });
+
 const httpServer = app.listen(port, () => {
     console.log(`listening on port http://localhost:${port}`);
 });
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
 const socketServer = new Server(httpServer);
-
-app.engine('handlebars', handlebars.engine());
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'handlebars');
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/', viewsRouter);
-
 socketServer.on('connection', socket => {
     console.log("Nuevo cliente conectado");
 });
-
-app.use('/api/products', productsRouter);
-app.use('/api/carts', cartsRouter);
 
 module.exports = { socketServer };
